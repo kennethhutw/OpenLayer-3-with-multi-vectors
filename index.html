@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <!--
+	** OpenLayer 3 with multi vectors example App
+	** Licensed under the Apache License v2.0
+	** http://www.apache.org/licenses/LICENSE-2.0
+	** Built by Kenneth Hu (Kenneth.hu@hotmail.com)
+	-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <link rel="stylesheet" href="http://openlayers.org/en/master/css/ol.css" type="text/css">
+    <style type="text/css">
+    body {
+      width: 960px;
+      height: 500px;
+      position: relative;
+    }
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+    div.fill {
+      width: 100%;
+      height: 100%;
+    }
+    </style>
+  
+    <title>OpenLayer 3 with multi vectors example</title>
+  </head>
+  <body>
+    <div id="map" class="map">
+      <div id="gmap" class="fill"></div>
+      <div id="olmap" class="fill"></div>
+    </div>
+   <script src="http://openlayers.org/en/v3.10.1/build/ol.js"></script>
+    <script type="text/javascript">
+   
+    var iconFeatures=[];
+  var iconFeature = new ol.Feature({
+						  geometry: new ol.geom.Point(ol.proj.transform([103.6080804,1.3571318], 'EPSG:4326',     
+						  'EPSG:3857')),
+						  name: 'Null Island',
+						  population: 4000,
+						  rainfall: 500
+						});
+  var iconFeature1 = new ol.Feature({
+						  geometry: new ol.geom.Point(ol.proj.transform([103.9080804,1.5571318], 'EPSG:4326',     
+						  'EPSG:3857')),
+						  name: 'Null Island',
+						  population: 4000,
+						  rainfall: 500
+						});
+
+  var iconFeature2 = new ol.Feature({
+						  geometry: new ol.geom.Point(ol.proj.transform([103.8080804,1.3571318], 'EPSG:4326',     
+						  'EPSG:3857')),
+						  name: 'Null Island',
+						  population: 4000,
+						  rainfall: 500
+						});
+
+var iconStyle = new ol.style.Style({
+  image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+    anchor: [0.5, 46],
+    anchorXUnits: 'fraction',
+    anchorYUnits: 'pixels',
+    opacity: 0.75,
+    src: 'http://openlayers.org/en/v3.0.0/examples/data/icon.png'
+  }))
+});
+
+iconFeature.setStyle(iconStyle);
+iconFeature1.setStyle(iconStyle);
+iconFeature2.setStyle(iconStyle);
+iconFeatures.push(iconFeature);
+iconFeatures.push(iconFeature1);
+iconFeatures.push(iconFeature2);
+
+
+
+var vectorSource = new ol.source.Vector({
+  features:iconFeatures
+});
+
+var vectorLayer = new ol.layer.Vector({
+  source: vectorSource
+});
+
+   var map = new ol.Map({
+    target: 'gmap',
+    renderer: 'canvas',
+   layers: [
+							new ol.layer.Tile({source: new ol.source.OSM()}),vectorLayer
+						],
+    view: new ol.View({
+      center: ol.proj.fromLonLat([103.8080804,1.3571318]),
+      zoom: 10
+    })
+  });
+    </script>
+  </body>
+</html>
